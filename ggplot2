@@ -16,7 +16,7 @@ ggplot(data=mtcars, aes(x=wt, y=mpg)) +
   labs(title="Automobile Data", x="Weight", y="Miles Per Gallon")
 
 
-# Scatter plot with additional options
+# Scatter plot with additional options##修改点的形状，颜色，大小。并进行线性拟合
 library(ggplot2)
 ggplot(data=mtcars, aes(x=wt, y=mpg)) +
   geom_point(pch=17, color="blue", size=2) +
@@ -24,7 +24,7 @@ ggplot(data=mtcars, aes(x=wt, y=mpg)) +
   labs(title="Automobile Data", x="Weight", y="Miles Per Gallon")
 
 
-# Scatter plot with faceting and grouping
+# Scatter plot with faceting and grouping ##分组和小面化
 data(mtcars)
 mtcars$am <- factor(mtcars$am, levels=c(0,1),
                     labels=c("Automatic", "Manual"))
@@ -41,7 +41,7 @@ ggplot(data=mtcars, aes(x=hp, y=mpg,
   labs(title="Automobile Data by Engine Type",
        x="Horsepower", y="Miles Per Gallon")
 
-# Using geoms
+# Using geoms ###地毯图
 data(singer, package="lattice")
 ggplot(singer, aes(x=height)) + geom_histogram()
 
@@ -56,13 +56,14 @@ ggplot(Salaries, aes(x=rank, y=salary)) +
   geom_rug(side="l", color="black")
 
 
-# Grouping
+# Grouping ##箱线图和小提琴结合
 library(ggplot2)
 data(singer, package="lattice")
 ggplot(singer, aes(x=voice.part, y=height)) +
   geom_violin(fill="lightblue") +
   geom_boxplot(fill="lightgreen", width=.2)
 
+##密度曲线
 data(Salaries, package="car")
 library(ggplot2)
 ggplot(data=Salaries, aes(x=salary, fill=rank)) +
@@ -71,6 +72,7 @@ ggplot(data=Salaries, aes(x=salary, fill=rank)) +
 ggplot(Salaries, aes(x=yrs.since.phd, y=salary, color=rank,
                      shape=sex)) + geom_point()
 
+##position不同，条形图排列位置不同。stack堆叠分组   fill垂直堆叠   dodge条形并排
 ggplot(Salaries, aes(x=rank, fill=sex)) +
   geom_bar(position="stack") + labs(title='position="stack"')
 
@@ -81,7 +83,7 @@ ggplot(Salaries, aes(x=rank, fill=sex)) +
   geom_bar(position="fill") + labs(title='position="fill"')
 
 
-# Placing options
+# Placing options ###参数位置很重要
 ggplot(Salaries, aes(x=rank, fill=sex))+ geom_bar()
 
 ggplot(Salaries, aes(x=rank)) + geom_bar(fill="red")
@@ -89,25 +91,25 @@ ggplot(Salaries, aes(x=rank)) + geom_bar(fill="red")
 ggplot(Salaries, aes(x=rank, fill="red")) + geom_bar()
 
 
-# Faceting
+# Faceting  
 data(singer, package="lattice")
 library(ggplot2)
 ggplot(data=singer, aes(x=height)) +
   geom_histogram() +
-  facet_wrap(~voice.part, nrow=4)
+  facet_wrap(~voice.part, nrow=4)  ####排列成n行
 
 library(ggplot2)
 ggplot(Salaries, aes(x=yrs.since.phd, y=salary, color=rank,
-                     shape=rank)) + geom_point() + facet_grid(.~sex)
+                     shape=rank)) + geom_point() + facet_grid(.~sex)##按性别分组，配置成单行
 
 data(singer, package="lattice")
 library(ggplot2)
 ggplot(data=singer, aes(x=height, fill=voice.part)) +
   geom_density() +
-  facet_grid(voice.part~.)
+  facet_grid(voice.part~.) ##按声部分组。配置成单列
 
 
-# Adding smoothed lines
+# Adding smoothed lines  ##添加光滑曲线
 data(Salaries, package="car")
 library(ggplot2)
 ggplot(data=Salaries, aes(x=yrs.since.phd, y=salary)) +
@@ -120,7 +122,7 @@ ggplot(data=Salaries, aes(x=yrs.since.phd, y=salary,
   geom_point(size=2)
 
 
-# Modifying axes
+# Modifying axes ###修改坐标轴信息， fill=sex  以画出不同性别的箱线图
 data(Salaries,package="car")
 library(ggplot2)
 ggplot(data=Salaries, aes(x=rank, y=salary, fill=sex)) +
@@ -134,7 +136,7 @@ ggplot(data=Salaries, aes(x=rank, y=salary, fill=sex)) +
   labs(title="Faculty Salary by Rank and Sex", x="", y="")
 
 
-# Legends
+# Legends ###图例
 data(Salaries,package="car")
 library(ggplot2)
 ggplot(data=Salaries, aes(x=rank, y=salary, fill=sex)) +
@@ -147,10 +149,10 @@ ggplot(data=Salaries, aes(x=rank, y=salary, fill=sex)) +
                      labels=c("$50K", "$100K", "$150K", "$200K")) +
   labs(title="Faculty Salary by Rank and Gender",
        x="", y="", fill="Gender") +
-  theme(legend.position=c(.1,.8))
+  theme(legend.position=c(.1,.8))  ###通过labs中加fill="mytitle",和theme函数。添加图例
 
 
-# Scales
+# Scales  ##添加标尺   气泡图
 ggplot(mtcars, aes(x=wt, y=mpg, size=disp)) +
   geom_point(shape=21, color="black", fill="cornsilk") +
   labs(x="Weight", y="Miles Per Gallon",
@@ -159,41 +161,41 @@ ggplot(mtcars, aes(x=wt, y=mpg, size=disp)) +
 data(Salaries, package="car")
 ggplot(data=Salaries, aes(x=yrs.since.phd, y=salary, color=rank)) +
   scale_color_manual(values=c("orange", "olivedrab", "navy")) +
-  geom_point(size=2)
+  geom_point(size=2)####将标尺与带有因子水平的视觉线索结合
 
 ggplot(data=Salaries, aes(x=yrs.since.phd, y=salary, color=rank)) +
-  scale_color_brewer(palette="Set1") + geom_point(size=2)
+  scale_color_brewer(palette="Set1") + geom_point(size=2) ####使用颜色集
 
 library(RColorBrewer)
-display.brewer.all()
+display.brewer.all()####查看所有的颜色集
 
 
-# Themes
+# Themes   ###图的整体外观。如字体，背景，颜色，网格线等
 data(Salaries, package="car")
 library(ggplot2)
-mytheme <- theme(plot.title=element_text(face="bold.italic",
+mytheme <- theme(plot.title=element_text(face="bold.italic",###字体   ###主标题
                                          size="14", color="brown"),
-                 axis.title=element_text(face="bold.italic",
+                 axis.title=element_text(face="bold.italic",####坐标轴标题
                                          size=10, color="brown"),
-                 axis.text=element_text(face="bold", size=9,
+                 axis.text=element_text(face="bold", size=9,###坐标轴标签
                                         color="darkblue"),
-                 panel.background=element_rect(fill="white",
+                 panel.background=element_rect(fill="white", ####背景填充和边框线
                                                color="darkblue"),
-                 panel.grid.major.y=element_line(color="grey",
-                                                 linetype=1),
-                 panel.grid.minor.y=element_line(color="grey",
+                 panel.grid.major.y=element_line(color="grey", ###主水平线
+                                                 linetype=1), 
+                 panel.grid.minor.y=element_line(color="grey",  ###次水平线
                                                  linetype=2),
-                 panel.grid.minor.x=element_blank(),
+                 panel.grid.minor.x=element_blank(),    ###无垂直水平线
                  legend.position="top")
 
 ggplot(Salaries, aes(x=rank, y=salary, fill=sex)) +
   geom_boxplot() +
   labs(title="Salary by Rank and Sex", 
-       x="Rank", y="Salary") +
+       x="Rank", y="Salary") +   ####主题设置可保存后多次使用
   mytheme
 
 
-# Multiple graphs per page
+# Multiple graphs per page ####将相互独立的图画在一起
 data(Salaries, package="car")
 library(ggplot2)
 p1 <- ggplot(data=Salaries, aes(x=rank)) + geom_bar()
